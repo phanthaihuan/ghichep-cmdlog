@@ -76,6 +76,10 @@ echo "Config cmdlog for current user"
 touch /var/log/cmdlog.log
 chmod 600 /var/log/cmdlog.log
 
+if [ $OS == "Ubuntu" ]; then
+    chown syslog:syslog /var/log/cmdlog.log
+fi
+
 if [[ -d "$HOME" ]] && [[ -f "$HOME/.bashrc" ]]; then 
     echo "# Command log" >> ~/.bashrc
     echo "export PROMPT_COMMAND='RETRN_VAL=$?;logger -p local6.debug \"[\$(echo \$SSH_CLIENT | cut -d\" \" -f1)] # \$(history 1 | sed \"s/^[ ]*[0-9]\+[ ]*//\" )\"'" >> ~/.bashrc
